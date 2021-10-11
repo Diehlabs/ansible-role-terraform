@@ -1,0 +1,8 @@
+---
+- name: Install Terraform tools
+  ansible.builtin.apt:
+    # name: "{{ tf_packages_deb | combine(tf_packages_common) }}"
+    name: "{{ item.key }}={{ item.value }}"
+    update_cache: yes
+    cache_valid_time: 600 # cache valid for 10 minutes
+  loop: "{{ tf_packages_deb | combine(tf_packages_common) | dict2items }}"

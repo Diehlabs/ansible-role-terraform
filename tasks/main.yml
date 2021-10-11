@@ -1,0 +1,19 @@
+---
+- include: Debian.yml
+  when: ansible_os_family == 'Debian'
+  become: true
+
+- include: nix.yml
+  when: ansible_os_family != 'Windows'
+  become: true
+
+- include: Darwin.yml
+  when: ansible_os_family == 'Darwin'
+
+- include: Windows.yml
+  when: ansible_os_family == 'Windows'
+
+- name: Install pip packages
+  pip:
+    name: "{{ tf_packages_pip }}"
+    extra_args: --user
