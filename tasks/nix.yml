@@ -1,11 +1,17 @@
 ---
 - name: Generate Terraform CLI Config (terraformrc)
-  ansible.builtin.template:
-    src: terraformrc.j2
-    dest: "~{{ terraform_user_id }}/.terraformrc"
+  ansible.builtin.blockinfile:
+    path: "~{{ terraform_user_id }}/.terraformrc"
     owner: "{{ terraform_user_id }}"
-    mode: '0644'
-  when: terraform_backends is defined
+    mode: u=rw
+    block: |
+      credentials "{{ item.key }}" {
+        token = "{{ item.value }}"
+      }
+      marker: "# Ansible managed block - creds for host {{ item.key }}"
+  when: terraform_backend_creds is defined
+  with_dict: terraform_backend_creds
+  no_log: true
 
 # - name: Terraform - Ensure version to be installed exists
 #   ansible.builtin.stat:
