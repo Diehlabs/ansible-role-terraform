@@ -5,13 +5,9 @@ terraform_brew_pkgs:
   - terraform
   - terragrunt
   - tflint
-
-terraform_brew_casks:
-  - liamg/tfsec
-
-terraform_pip_pkgs:
   - terraform-docs
   - checkov
+  - tfsec
 
 system_arch:
   x86_64: amd64

@@ -13,7 +13,7 @@
 # - include_tasks: Windows.yml
 #   when: ansible_os_family == 'Windows'
 
-- name: Install pip packages
-  pip:
-    name: "{{ terraform_pip_pkgs }}"
-    extra_args: --user
+# - name: Install pip packages
+#   pip:
+#     name: "{{ terraform_pip_pkgs }}"
+#     extra_args: --user
