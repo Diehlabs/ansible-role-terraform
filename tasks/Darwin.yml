@@ -4,7 +4,7 @@
   community.general.homebrew:
     name: "{{ item.key }}"
     state: "{{ item.value }}"
-  loop: "{{ tf_packages }}"
+  loop: "{{ terraform_brew_pkgs }}"
 
 # look up user path and make this generic for linux and osx...
 - name: Generate Terraform CLI Config (terraformrc)

@@ -6,24 +6,3 @@ terraform_user_id: "{{ user_id }}"
 terraform_backends:
   # hostname: terraform_api_token
   # app.terraform.io":  "fdhskfhsdk.atlasv1.dfwknlfnkewlfjl.....fen3h9844yhbfjikHD"
-
-#   go: go1.15.15
-#   # https://www.digitalocean.com/community/tutorials/how-to-install-go-on-ubuntu-20-04
-
-  # add gopls - go get -v golang.org/x/tools/gopls
-
-# terraform_user_paths:
-#   Darwin:
-#     home:
-#       "/Users/{{ terraform_user_id }}": 750
-#     plugins:
-#       "/Users/{{ terraform_user_id }}/.tf_d/plugins": 750
-#   Linux:
-#     home:
-#       "/home/{{ terraform_user_id }}": 750
-#     plugins:
-#       "/home/{{ terraform_user_id }}/.tf_d/plugins": 750
-#     mode: 750
-#   Windows:
-#     home: "C:/Users/{{ terraform_user_id }}/AppData/Roaming"
-#     path: "C:/Users/{{ terraform_user_id }}/AppData/Roaming/tf_d/plugins"
