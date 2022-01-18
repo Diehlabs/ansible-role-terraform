@@ -25,7 +25,7 @@
     src: /tmp/terraform
     dest: "/usr/local/bin/terraform-{{ tf_version }}"
     mode: u=rwx,g=rx,o=x
-    owner: "{{ tf_user_id }}"
+    owner: "{{ terraform_user_id }}"
     group: admin
     remote_src: true
   when: tf_bin_check.stat.exists == 'false'
@@ -35,7 +35,7 @@
 #     state: file
 #     path: "/usr/local/bin/terraform-{{ tf_version }}"
 #     mode: u=rwx,g=rx,o=x
-#     owner: "{{ tf_user_id }}"
+#     owner: "{{ terraform_user_id }}"
 #     group: admin
 
 - name: Delete Terraform archive

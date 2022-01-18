@@ -1,54 +1,29 @@
 ---
-tf_user_id:
+# defaults file for terraform
 
-tf_backends:
+terraform_user_id: "{{ user_id }}"
+
+terraform_backends:
   # hostname: terraform_api_token
   # app.terraform.io":  "fdhskfhsdk.atlasv1.dfwknlfnkewlfjl.....fen3h9844yhbfjikHD"
-
-tf_version_default: '1.0.8'
-tf_versions:
-  - '0.12.31'
-  - '0.13.7'
-  - '0.14.11'
-  - '0.15.5'
-tf_docs_version: '0.16.0'
-tf_lint_version: '0.32.1'
-
-# tf_packages_common:
-#   terraform: '1.0.8'
-
-#   terragrunt: v0.34.2
-#   # https://github.com/gruntwork-io/terragrunt/releases/download/v0.34.3/terragrunt_darwin_arm64
-
-#   # terrascan: v1.11.0
-#   # https://github.com/accurics/terrascan/releases/download/v1.11.0/terrascan_1.11.0_Darwin_arm64.tar.gz
-
-#   terraform-docs: v0.16.0
-#   # https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-darwin-arm64.tar.gz
-
-#   tflint: v0.32.1
-#   # https://github.com/terraform-linters/tflint/releases/download/v0.32.1/tflint_darwin_arm64.zip
-
-#   tfsec: present
-#   # https://github.com/aquasecurity/tfsec/releases/download/v0.58.14/tfsec-darwin-arm64
 
 #   go: go1.15.15
 #   # https://www.digitalocean.com/community/tutorials/how-to-install-go-on-ubuntu-20-04
 
   # add gopls - go get -v golang.org/x/tools/gopls
 
-# tf_user_paths:
+# terraform_user_paths:
 #   Darwin:
 #     home:
-#       "/Users/{{ tf_user_id }}": 750
+#       "/Users/{{ terraform_user_id }}": 750
 #     plugins:
-#       "/Users/{{ tf_user_id }}/.tf_d/plugins": 750
+#       "/Users/{{ terraform_user_id }}/.tf_d/plugins": 750
 #   Linux:
 #     home:
-#       "/home/{{ tf_user_id }}": 750
+#       "/home/{{ terraform_user_id }}": 750
 #     plugins:
-#       "/home/{{ tf_user_id }}/.tf_d/plugins": 750
+#       "/home/{{ terraform_user_id }}/.tf_d/plugins": 750
 #     mode: 750
 #   Windows:
-#     home: "C:/Users/{{ tf_user_id }}/AppData/Roaming"
-#     path: "C:/Users/{{ tf_user_id }}/AppData/Roaming/tf_d/plugins"
+#     home: "C:/Users/{{ terraform_user_id }}/AppData/Roaming"
+#     path: "C:/Users/{{ terraform_user_id }}/AppData/Roaming/tf_d/plugins"

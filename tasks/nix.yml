@@ -1,5 +1,5 @@
 ---
-- include: nix_downloads.yml tf_version={{ item }}
+- include_tasks: nix_downloads.yml tf_version={{ item }}
   with_items: "{{ tf_versions }}"
 
 - name: Create symlink for default Terraform binary version
@@ -7,7 +7,7 @@
     src: "/usr/local/bin/terraform-{{ tf_default_version }}"
     dest: "/usr/local/bin/terraform"
     mode: u=rwx,g=rx,o=x
-    owner: "{{ tf_user_id }}"
+    owner: "{{ terraform_user_id }}"
     group: admin
     state: link
 
@@ -16,5 +16,5 @@
 #     path: "{{ tf_user_paths[ansible_system]. }}"
 #     state: directory
 #     mode: "{{ tf_plugin_path[ansible_system].mode }}"
-#     owner: "{{ tf_user_id }}"
+#     owner: "{{ terraform_user_id }}"
 #     group: admin

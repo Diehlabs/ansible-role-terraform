@@ -1,4 +1,4 @@
-{% for backend in tf_backends %}
+{% for backend in terraform_backends %}
 credentials "{{ backend.host_name }}" {
   token = "{{ backend.tfe_token }}"
 }
