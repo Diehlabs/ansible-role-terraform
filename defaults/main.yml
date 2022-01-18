@@ -3,6 +3,6 @@
 
 terraform_user_id: "{{ user_id }}"
 
-terraform_backends:
+# terraform_backends:
   # hostname: terraform_api_token
   # app.terraform.io":  "fdhskfhsdk.atlasv1.dfwknlfnkewlfjl.....fen3h9844yhbfjikHD"
