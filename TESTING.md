@@ -25,3 +25,5 @@ Run `molecule create`
 
 
 requires community.docker 
+
+pip install --upgrade pip
