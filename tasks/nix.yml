@@ -15,7 +15,7 @@
 
 - name: Download Terraform alternate versions
   ansible.builtin.unarchive:
-    url: "https://releases.hashicorp.com/terraform/{{ item.value }}/terraform_{{ item.value }}_{{ ansible_system | lower }}_{{ terraform_arch[ansible_architecture] }}.zip"
+    src: "https://releases.hashicorp.com/terraform/{{ item.value }}/terraform_{{ item.value }}_{{ ansible_system | lower }}_{{ terraform_arch[ansible_architecture] }}.zip"
     dest: "/usr/local/bin/terraform{{ item.key }}"
     owner: "{{ terraform_user_id }}"
     mode: u=rwx,g=rwx,o=rx
