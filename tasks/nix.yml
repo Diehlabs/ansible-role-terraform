@@ -8,7 +8,7 @@
       credentials "{{ item.key }}" {
         token = "{{ item.value }}"
       }
-    marker: "# Ansible managed block - creds for host {{ item.key }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - creds for host {{ item.key }}"
   when: terraform_backend_creds is defined
   loop: "{{ terraform_backend_creds | dict2items }}"
   no_log: true
