@@ -11,7 +11,7 @@
     marker: "# Ansible managed block - creds for host {{ item.key }}"
   when: terraform_backend_creds is defined
   loop: "{{ terraform_backend_creds | dict2items }}"
-  # no_log: true
+  no_log: true
 
 # - name: Terraform - Ensure version to be installed exists
 #   ansible.builtin.stat:
