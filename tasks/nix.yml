@@ -8,9 +8,9 @@
       credentials "{{ item.key }}" {
         token = "{{ item.value }}"
       }
-      marker: "# Ansible managed block - creds for host {{ item.key }}"
+    marker: "# Ansible managed block - creds for host {{ item.key }}"
   when: terraform_backend_creds is defined
-  with_dict: terraform_backend_creds
+  loop: "{{ terraform_backend_creds | dict2items }}"
   # no_log: true
 
 # - name: Terraform - Ensure version to be installed exists
