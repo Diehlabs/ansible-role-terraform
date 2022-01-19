@@ -13,11 +13,5 @@
   loop: "{{ terraform_backend_creds | dict2items }}"
   no_log: true
 
-- name: Download Terraform alternate versions
-  ansible.builtin.unarchive:
-    src: "https://releases.hashicorp.com/terraform/{{ item.value }}/terraform_{{ item.value }}_{{ ansible_system | lower }}_{{ terraform_arch[ansible_architecture] }}.zip"
-    dest: "/usr/local/bin/terraform{{ item.key }}"
-    owner: "{{ terraform_user_id }}"
-    mode: u=rwx,g=rwx,o=rx
-    remote_src: true
+- include_tasks: download_alt_versions.yml
   loop: "{{ terraform_alt_versions | dict2items }}"
