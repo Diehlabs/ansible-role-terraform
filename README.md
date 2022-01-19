@@ -6,6 +6,8 @@ This will always install the binaries contained in list [tf_versions].
 A symlink or shortcut named Terraform will be created that points to the [tf_default_version].
 This allows you to maintain multiple versions of the TF CLI when needed.
 
+Terraform 1.0.2 is the first version that was built for Darwin ARM64, so you can't include lower versions for this in terraform_alt_versions if you are using this type of system!
+
 TODO:
 add golang install from pkg file
 

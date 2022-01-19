@@ -15,3 +15,4 @@
 
 - include_tasks: download_alt_versions.yml
   loop: "{{ terraform_alt_versions | dict2items }}"
+  when: terraform_alt_versions is defined

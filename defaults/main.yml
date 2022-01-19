@@ -7,10 +7,11 @@ terraform_user_id: "{{ user_id }}"
 # to keep them secret!
 # https://docs.ansible.com/ansible/latest/user_guide/vault.html
 
-terraform_alt_versions:
-  14: '0.14.11'
-  13: '0.13.7'
-  12: '0.12.31'
+# terraform_alt_versions:
+#   15: '0.15.5'
+#   14: '0.14.11'
+#   13: '0.13.7'
+#   12: '0.12.31'
 
 # terraform_backend_creds:
   # hostname: terraform_api_token
