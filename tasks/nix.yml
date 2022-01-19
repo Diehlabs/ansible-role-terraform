@@ -17,7 +17,7 @@
   ansible.builtin.unarchive:
     url: "https://releases.hashicorp.com/terraform/{{ item.value }}/terraform_{{ item.value }}_{{ ansible_system | lower }}_{{ terraform_arch[ansible_architecture] }}.zip"
     dest: "/usr/local/bin/terraform{{ item.key }}"
-    owner: "{{ terraform_usr_id }}"
+    owner: "{{ terraform_user_id }}"
     mode: u=rwx,g=rwx,o=rx
     remote_src: true
   loop: "{{ terraform_alt_versions | dict2items }}"
