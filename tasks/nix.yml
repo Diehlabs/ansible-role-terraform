@@ -13,44 +13,11 @@
   loop: "{{ terraform_backend_creds | dict2items }}"
   no_log: true
 
-# - name: Terraform - Ensure version to be installed exists
-#   ansible.builtin.stat:
-#     path: "/usr/local/bin/terraform-{{ tf_version }}"
-#   register: tf_bin_check
-
-# - name: Download Terraform binary
-#   ansible.builtin.get_url:
-#     url: "https://releases.hashicorp.com/terraform/{{ tf_version }}/terraform_{{ tf_version }}_{{ ansible_system | lower }}_{{ kctl_arch[ansible_architecture] }}.zip"
-#     dest: /tmp
-#   when: tf_bin_check.stat.exists == false
-
-# - name: "Extract Terraform binary {{ tf_version }}"
-#   ansible.builtin.unarchive:
-#     src: "/tmp/terraform_{{ tf_version }}_{{ ansible_system | lower }}_amd64.zip"
-#     dest: /tmp
-#     remote_src: true
-#     creates: "/usr/local/bin/terraform-{{ tf_version }}"
-#   # when: tf_bin_check.stat.exists == false
-
-# - name: Move Terraform binary
-#   ansible.builtin.copy:
-#     src: /tmp/terraform
-#     dest: "/usr/local/bin/terraform-{{ tf_version }}"
-#     mode: u=rwx,g=rx,o=x
-#     owner: "{{ tf_user_id }}"
-#     group: admin
-#     remote_src: true
-#   when: tf_bin_check.stat.exists == false
-
-# # - name: Set file permissions on Terraform binary
-# #   ansible.builtin.file:
-# #     state: file
-# #     path: "/usr/local/bin/terraform-{{ tf_version }}"
-# #     mode: u=rwx,g=rx,o=x
-# #     owner: "{{ tf_user_id }}"
-# #     group: admin
-
-# - name: Delete Terraform archive
-#   ansible.builtin.file:
-#     path: "/tmp/terraform_{{ tf_version }}_{{ ansible_system | lower }}_amd64.zip"
-#     state: absent
+- name: Download Terraform alternate versions
+  ansible.builtin.unarchive:
+    url: "https://releases.hashicorp.com/terraform/{{ item.value }}/terraform_{{ item.value }}_{{ ansible_system | lower }}_{{ kctl_arch[ansible_architecture] }}.zip"
+    dest: "/usr/local/bin/terraform{{ item.key }}"
+    owner: "{{ terraform_usr_id }}"
+    mode: u=rwx,g=rwx,o=rx
+    remote_src: true
+  loop: "{{ terraform_alt_versions | dict2items }}"
