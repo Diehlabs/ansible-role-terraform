@@ -7,7 +7,7 @@
 
 - name: Extract Terraform alt versions
   ansible.builtin.unarchive:
-    src: "/tmp/terraform_{{ item.value }}_{{ ansible_system | lower }}_amd64.zip"
+    src: "/tmp/terraform_{{ item.value }}_{{ ansible_system | lower }}_{{ terraform_arch[ansible_architecture] }}.zip"
     dest: /tmp
     remote_src: true
     creates: "/usr/local/bin/terraform{{ item.key }}"
@@ -15,7 +15,7 @@
 - name: Move Terraform alt versions to bin
   ansible.builtin.copy:
     src: /tmp/terraform
-    dest: "/usr/local/bin/terraform-{{ tf_version }}"
+    dest: "/usr/local/bin/terraform-{{ item.key }}"
     mode: u=rwx,g=rx,o=x
     owner: "{{ terraform_user_id }}"
     remote_src: true
