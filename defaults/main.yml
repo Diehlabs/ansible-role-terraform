@@ -1,6 +1,8 @@
 ---
 # defaults file for terraform
 
+# terraform_golang_version: 1.16
+
 terraform_user_id: "{{ user_id }}"
 
 # The tokens should be an encrypted ansible vault value, or supplied from HashiCorp Vault
