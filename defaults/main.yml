@@ -5,6 +5,9 @@
 
 terraform_user_id: "{{ user_id }}"
 
+# only used for linux
+# terraform_verion: 1.1.4
+
 # The tokens should be an encrypted ansible vault value, or supplied from HashiCorp Vault
 # to keep them secret!
 # https://docs.ansible.com/ansible/latest/user_guide/vault.html

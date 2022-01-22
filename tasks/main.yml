@@ -2,5 +2,8 @@
 - include_tasks: Darwin.yml
   when: ansible_os_family == 'Darwin'
 
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
 - include_tasks: nix.yml
   when: ansible_os_family != 'Windows'

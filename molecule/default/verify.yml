@@ -5,6 +5,19 @@
   hosts: all
   gather_facts: false
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+
+  - name: Get Terraform version
+    ansible.builtin.command:
+      cmd: terraform --version
+    register: tf_output
+    changed_when: False
+
+  - name: Output Terraform version
+    ansible.builtin.debug:
+      msg: "{{ tf_output.stdout_lines }}"
+    changed_when: False
+
+  # - name: Assert that terraform_version is installed
+  #   ansible.builtin.assert:
+  #     that: 1.1.4 in tf_output.stdout
+    # when: ansible_system == "Linux"
