@@ -1,21 +1,6 @@
 ---
-- name: Install Homebrew Packages
+- name: Install Terraform Homebrew Packages
   become: false
-  homebrew:
-    name: "{{ item.key }}"
-    state: "{{ item.value }}"
-  loop: "{{ tf_packages }}"
-
-- name: Install Homebrew Casks
-  community.general.homebrew_cask:
-    state: present
-    name:
-      - liamg/tfsec
-
-# look up user path and make this generic for linux and osx...
-- name: Generate Terraform CLI Config
-  ansible.builtin.template:
-    src: terraformrc.j2
-    dest: "/Users/{{ tf_user_id }}/.terraformrc"
-    owner: "{{ tf_user_id }}"
-    mode: '0644'
+  community.general.homebrew:
+    name: "{{ item }}"
+  loop: "{{ terraform_brew_pkgs }}"

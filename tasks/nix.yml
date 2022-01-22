@@ -1,20 +1,18 @@
 ---
-- include: nix_downloads.yml tf_version={{ item }}
-  with_items: "{{ tf_versions }}"
+- name: Generate Terraform CLI Config (terraformrc)
+  ansible.builtin.blockinfile:
+    path: "~{{ terraform_user_id }}/.terraformrc"
+    owner: "{{ terraform_user_id }}"
+    mode: u=rw
+    block: |
+      credentials "{{ item.key }}" {
+        token = "{{ item.value }}"
+      }
+    marker: "# Ansible managed block - creds for host {{ item.key }}"
+  when: terraform_backend_creds is defined
+  loop: "{{ terraform_backend_creds | dict2items }}"
+  no_log: true
 
-- name: Create symlink for default Terraform binary version
-  ansible.builtin.file:
-    src: "/usr/local/bin/terraform-{{ tf_default_version }}"
-    dest: "/usr/local/bin/terraform"
-    mode: u=rwx,g=rx,o=x
-    owner: "{{ tf_user_id }}"
-    group: admin
-    state: link
-
-# - name: Ensure Terraform plugins directory exists for user on *nix
-#   ansible.builtin.file:
-#     path: "{{ tf_user_paths[ansible_system]. }}"
-#     state: directory
-#     mode: "{{ tf_plugin_path[ansible_system].mode }}"
-#     owner: "{{ tf_user_id }}"
-#     group: admin
+- include_tasks: download_alt_versions.yml
+  loop: "{{ terraform_alt_versions | dict2items }}"
+  when: terraform_alt_versions is defined

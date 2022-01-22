@@ -1,54 +1,28 @@
 ---
-tf_user_id:
+# defaults file for terraform
 
-tf_backends:
+: "{{ user_id }}"
+
+# The tokens should be an encrypted ansible vault value, or supplied from HashiCorp Vault
+# to keep them secret!
+# https://docs.ansible.com/ansible/latest/user_guide/vault.html
+
+# terraform_alt_versions:
+#   15: '0.15.5'
+#   14: '0.14.11'
+#   13: '0.13.7'
+#   12: '0.12.31'
+
+# terraform_backend_creds:
   # hostname: terraform_api_token
-  # app.terraform.io":  "fdhskfhsdk.atlasv1.dfwknlfnkewlfjl.....fen3h9844yhbfjikHD"
-
-tf_version_default: '1.0.8'
-tf_versions:
-  - '0.12.31'
-  - '0.13.7'
-  - '0.14.11'
-  - '0.15.5'
-tf_docs_version: '0.16.0'
-tf_lint_version: '0.32.1'
-
-# tf_packages_common:
-#   terraform: '1.0.8'
-
-#   terragrunt: v0.34.2
-#   # https://github.com/gruntwork-io/terragrunt/releases/download/v0.34.3/terragrunt_darwin_arm64
-
-#   # terrascan: v1.11.0
-#   # https://github.com/accurics/terrascan/releases/download/v1.11.0/terrascan_1.11.0_Darwin_arm64.tar.gz
-
-#   terraform-docs: v0.16.0
-#   # https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-darwin-arm64.tar.gz
-
-#   tflint: v0.32.1
-#   # https://github.com/terraform-linters/tflint/releases/download/v0.32.1/tflint_darwin_arm64.zip
-
-#   tfsec: present
-#   # https://github.com/aquasecurity/tfsec/releases/download/v0.58.14/tfsec-darwin-arm64
-
-#   go: go1.15.15
-#   # https://www.digitalocean.com/community/tutorials/how-to-install-go-on-ubuntu-20-04
-
-  # add gopls - go get -v golang.org/x/tools/gopls
-
-# tf_user_paths:
-#   Darwin:
-#     home:
-#       "/Users/{{ tf_user_id }}": 750
-#     plugins:
-#       "/Users/{{ tf_user_id }}/.tf_d/plugins": 750
-#   Linux:
-#     home:
-#       "/home/{{ tf_user_id }}": 750
-#     plugins:
-#       "/home/{{ tf_user_id }}/.tf_d/plugins": 750
-#     mode: 750
-#   Windows:
-#     home: "C:/Users/{{ tf_user_id }}/AppData/Roaming"
-#     path: "C:/Users/{{ tf_user_id }}/AppData/Roaming/tf_d/plugins"
+  # app.terraform.io":  !vault |
+      # $ANSIBLE_VAULT;1.1;AES256
+      # 64343936303361373466336362333663636161653035383735383230313066613865303638386130
+      # 3532643563636536383431616461666235396465316564310a396166363562623533336465313434
+      # 63396536373665633736353264303265343866323164316634383062623636323735636639666636
+      # 3265383165306530360a343330376461633130633532376435666538623635313334353632313061
+      # 32363632316234303932373562616439323331303933616532613037653837643939353031353361
+      # 36376232616633313435633563303462393638343164373735613334653738656339316165616164
+      # 62353932633030663165643437653631383162366433643166333138346637373862303161316663
+      # 62313731356464326435393263623262373361366464633466366438353932373639313165336366
+      # 3030

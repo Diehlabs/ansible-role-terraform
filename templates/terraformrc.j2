@@ -1,5 +1,0 @@
-{% for backend in tf_backends %}
-credentials "{{ backend.host_name }}" {
-  token = "{{ backend.tfe_token }}"
-}
-{% end for %}
