@@ -1,9 +1,7 @@
-ansible-role-terraform [![Ansible Lint](https://github.com/Diehlabs/ansible-role-terraform/actions/workflows/Ansible%20Lint.yml/badge.svg)](https://github.com/Diehlabs/ansible-role-terraform/actions/workflows/Ansible%20Lint.yml)
+ansible-role-terraform [![Ansible Test](https://github.com/Diehlabs/ansible-role-terraform/actions/workflows/test.yml/badge.svg)](https://github.com/Diehlabs/ansible-role-terraform/actions/workflows/test.yml)
 =========
 
 Installs Terraform and configures system for use.
-This will always install the binaries contained in list [tf_versions].
-A symlink or shortcut named Terraform will be created that points to the [tf_default_version].
 This allows you to maintain multiple versions of the TF CLI when needed.
 
 Terraform 1.0.2 is the first version that was built for Darwin ARM64, so you can't include lower versions for this in terraform_alt_versions if you are using this type of system!
@@ -19,9 +17,9 @@ None.
 Role Variables
 --------------
 * terraform_user_id: the user ID to configure Terraform for.
+* terraform_alt_versions: a dict of alternate vesions to install.
+* terraform_backend_creds: a list of TFE/TFC hosts and tokens.
 * tf_install_dev_tools: [bool] If set to true, will install Golang. Defaults to false.
-* tf_versions: '0.12.26' Use this list to specify the version you want to install.
-* tf_default_version: '0.13.5' Use this to specify which will be default when you run `terraform` from the CLI. Defaults to the value of tf_install_version.
 
 Dependencies
 ------------

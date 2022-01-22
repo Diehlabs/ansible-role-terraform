@@ -9,4 +9,6 @@
 
     - name: "Include terraform"
       include_role:
-        name: "terraform"
+        name: "ansible-role-terraform"
+      vars:
+        terraform_golang_version: 1.16

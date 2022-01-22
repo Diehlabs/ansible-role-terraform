@@ -24,6 +24,6 @@ Run `molecule lint`
 Run `molecule create`
 
 
-requires community.docker 
+requires community.docker
 
 pip install --upgrade pip
