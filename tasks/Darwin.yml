@@ -7,6 +7,6 @@
 
 - name: Install golang
   become: false
-  ansible.builtin.brew:
+  community.general.homebrew:
     name: "go@{{ terraform_golang_version }}"
   when: terraform_golang_version is defined
