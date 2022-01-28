@@ -5,6 +5,8 @@
 
 terraform_user_id: "{{ user_id }}"
 
+# terraform_cli_config_extra:
+
 # only used for linux
 # terraform_verion: 1.1.4
 

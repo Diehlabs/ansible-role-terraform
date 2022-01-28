@@ -1,5 +1,5 @@
 ---
-- name: Generate Terraform CLI Config (terraformrc)
+- name: Manage Terraform CLI credentials
   ansible.builtin.blockinfile:
     path: "~{{ terraform_user_id }}/.terraformrc"
     create: true
@@ -9,10 +9,20 @@
       credentials "{{ item.key }}" {
         token = "{{ item.value }}"
       }
-    marker: "# {mark} ANSIBLE MANAGED BLOCK - creds for host {{ item.key }}"
+    marker: "# {mark} --------------------- ANSIBLE MANAGED BLOCK - {{ item.key }} managed by ansible-role-terraform"
   when: terraform_backend_creds is defined
   loop: "{{ terraform_backend_creds | dict2items }}"
   no_log: true
+
+- name: Manage Terraform CLI extra config
+  ansible.builtin.blockinfile:
+    path: "~{{ terraform_user_id }}/.terraformrc"
+    create: true
+    owner: "{{ terraform_user_id }}"
+    mode: u=rw
+    block: "{{ terraform_cli_config_extra }}"
+    marker: "# {mark}  --------------------- ANSIBLE MANAGED BLOCK"
+  when: terraform_cli_config_extra is defined
 
 - include_tasks: download_alt_versions.yml
   loop: "{{ terraform_alt_versions | dict2items }}"
