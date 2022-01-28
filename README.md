@@ -16,10 +16,15 @@ None.
 
 Role Variables
 --------------
-* terraform_user_id: the user ID to configure Terraform for.
-* terraform_alt_versions: a dict of alternate vesions to install.
-* terraform_backend_creds: a list of TFE/TFC hosts and tokens.
-* tf_install_dev_tools: [bool] If set to true, will install Golang. Defaults to false.
+
+| Variable name | Description | Example value | Default value | Required? |
+|---|---|---|---|---|
+terraform_user_id | User ID for file perms etc | myuserid | {{ user_id }} | YES |
+terraform_backend_creds | TFE/TFC credential data | see default/main.yml | not defined | NO |
+terraform_cli_config_extra | Non-TFE/TFC credential data for terraformrc | "provider_installation { ..." | not defined | NO |
+terraform_alt_versions | Additional versions of TF CLI to install | see default/main.yml | not defined | NO |
+terraform_verion | Primary TF CLI version to install | see default/main.yml | not defined | Yes if Linux |
+
 
 Dependencies
 ------------
