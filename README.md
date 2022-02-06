@@ -38,17 +38,16 @@ Example Playbook
 - hosts: localhost
   tasks:
     - include_role:
-        name: terraform
+        name: ansible-role-terraform
       vars:
         terraform_user_id: chris
-        tf_default_version: 0.12.26
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-It's just by me, nothing fancy.
+[Chris Diehl](https://www.linkedin.com/in/chrisdiehl817/)
