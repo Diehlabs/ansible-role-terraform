@@ -4,16 +4,11 @@
   vars:
     user_id: chris
   tasks:
-
-    - name: Add the user needed to test role with defaults
-      ansible.builtin.user:
-        name: "{{ user_id }}"
-
     - name: "Include terraform"
       include_role:
         name: "ansible-role-terraform"
       vars:
         terraform_golang_version: 1.16
-        terraform_version: 1.1.4
+        terraform_version: 1.1.5
         terraform_alt_versions:
-          102: 1.0.2
+          102: 1.0.2 # 1.0.2 is the first version published for arm64 arch
