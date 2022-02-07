@@ -1,4 +1,5 @@
-ansible-role-terraform [![Ansible Test](https://github.com/Diehlabs/ansible-role-terraform/actions/workflows/test.yml/badge.svg)](https://github.com/Diehlabs/ansible-role-terraform/actions/workflows/test.yml)
+# ansible-role-terraform
+[![Ansible CI](https://github.com/Diehlabs/ansible-role-terraform/actions/workflows/ci.yml/badge.svg)](https://github.com/Diehlabs/ansible-role-terraform/actions/workflows/ci.yml)
 =========
 
 Installs Terraform and configures system for use.

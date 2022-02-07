@@ -4,20 +4,17 @@
 - name: Verify
   hosts: all
   gather_facts: false
+  vars:
+    tf_outdated: 'is out of date'
   tasks:
-
   - name: Get Terraform version
     ansible.builtin.command:
       cmd: terraform --version
     register: tf_output
     changed_when: False
 
-  - name: Output Terraform version
+  - name: Terraform version is latest
     ansible.builtin.debug:
       msg: "{{ tf_output.stdout_lines }}"
     changed_when: False
-
-  # - name: Assert that terraform_version is installed
-  #   ansible.builtin.assert:
-  #     that: 1.1.4 in tf_output.stdout
-    # when: ansible_system == "Linux"
+    when: tf_outdated in tf_output.stdout
