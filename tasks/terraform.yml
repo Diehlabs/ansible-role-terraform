@@ -5,8 +5,12 @@
       {%- if item.key | lower == 'default' -%}
       terraform
       {%- else -%}
-      "terraform-{{ item.key }}"
+      terraform-{{ item.key }}
       {%- endif -%}
+
+- name: "Output: tf_binary {{ item.value }}"
+  ansible.builtin.debug:
+    var: tf_binary
 
 - name: Set arch to amd64 if TF CLI version is older than 1.0.2
   ansible.builtin.set_fact:
@@ -17,14 +21,22 @@
       {{ terraform_arch[ansible_architecture] }}
       {%- endif -%}
 
+- name: "Output: tf_cli_arch {{ item.value }}"
+  ansible.builtin.debug:
+    var: tf_cli_arch
+
 - name: Set Terraform archive filename based on version
   ansible.builtin.set_fact:
     tf_archive: "terraform_{{ item.value }}_{{ ansible_system | lower }}_{{ tf_cli_arch }}.zip"
 
+- name: "Output: tf_archive {{ item.value }}"
+  ansible.builtin.debug:
+    var: tf_archive
+
 - name: "Verify TF binary {{ item.value }}"
   ansible.builtin.stat:
     path: "{{ terraform_binary_path }}/{{ tf_binary }}"
-  register: tf_binary
+  register: tf_binary_verify
 
 - name: "Verify TF version {{ item.value }}"
   ansible.builtin.command: "{{ terraform_binary_path }}/{{ tf_binary }} --version"
@@ -37,10 +49,7 @@
     remote_src: yes
     src: "https://releases.hashicorp.com/terraform/{{ item.value }}/{{ tf_archive }}"
     dest: "/tmp"
-    # owner: "{{ terraform_user_id }}"
-    # mode: u=rwx,g=rx,o=rx
-  register: tf_downloaded
-  when: not tf_binary.stat.exists or item.value not in tf_version.stdout
+  when: not tf_binary_verify.stat.exists or item.value not in tf_version.stdout
 
 - name: "Move Terraform binary v{{ item.value }}"
   ansible.builtin.copy:
@@ -49,7 +58,7 @@
     mode: u=rwx,g=rx,o=rx
     owner: "{{ terraform_user_id }}"
     remote_src: true
-  when: tf_downloaded
+  when: not tf_binary_verify.stat.exists or item.value not in tf_version.stdout
 
 - name: "Delete Terraform archive v{{ item.value }}"
   ansible.builtin.file:

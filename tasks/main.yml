@@ -31,4 +31,4 @@
   when: terraform_cli_config_extra is defined
 
 - include_tasks: terraform.yml
-  loop: "{{ terraform_versions | dict2items }}"
+  with_dict: "{{ terraform_versions }}"
