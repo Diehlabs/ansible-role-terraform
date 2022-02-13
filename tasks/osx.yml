@@ -4,14 +4,9 @@
   community.general.homebrew:
     state: absent
     name: terraform
+    install_options: --ignore-dependencies
 
 - name: Install Terraform Homebrew Packages
   become: false
   community.general.homebrew:
     state: present
-
-- name: Install golang
-  become: false
-  community.general.homebrew:
-    name: "go@{{ terraform_golang_version }}"
-  when: terraform_golang_version is defined
