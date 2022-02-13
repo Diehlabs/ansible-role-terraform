@@ -1,9 +1,14 @@
 ---
+- name: Uninstall Terraform Homebrew Packages
+  become: false
+  community.general.homebrew:
+    state: absent
+    name: terraform
+
 - name: Install Terraform Homebrew Packages
   become: false
   community.general.homebrew:
-    name: "{{ item }}"
-  loop: "{{ terraform_brew_pkgs }}"
+    state: present
 
 - name: Install golang
   become: false

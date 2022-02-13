@@ -1,0 +1,48 @@
+---
+- name: Set Terraform binary filename based on version
+  ansible.builtin.set_fact:
+    tf_binary: >-
+      {%- if item.key | lower == 'default' -%}
+      terraform
+      {%- else -%}
+      "terraform-{{ item.key }}"
+      {%- endif -%}
+
+- name: Set Terraform archive filename based on version
+  ansible.builtin.set_fact:
+    tf_archive: "terraform_{{ item.value }}_{{ ansible_system | lower }}_{{ terraform_arch[ansible_architecture] }}.zip"
+
+- name: "Verify TF binary {{ item.value }}"
+  ansible.builtin.stat:
+    path: "/usr/local/bin/{{ tf_binary }}"
+  register: tf_binary
+
+- name: "Verify TF version {{ item.value }}"
+  ansible.builtin.command: "/usr/local/bin/{{ tf_binary }} --version"
+  failed_when: false
+  changed_when: false
+  register: tf_version
+
+- name: "Extract Terraform binary v{{ item.value }}"
+  ansible.builtin.unarchive:
+    remote_src: yes
+    src: "https://releases.hashicorp.com/terraform/{{ item.value }}/{{ tf_archive }}"
+    dest: "/tmp"
+    owner: "{{ terraform_user_id }}"
+    mode: u=rwx,g=rx,o=rx
+  register: tf_downloaded
+  when: not tf_binary.stat.exists or item.value not in tf_version.stdout
+
+- name: Move Terraform binary
+  ansible.builtin.copy:
+    src: /tmp/terraform
+    dest: "/usr/local/bin/{{ tf_binary }}"
+    mode: u=rwx,g=rx,o=x
+    owner: "{{ terraform_user_id }}"
+    remote_src: true
+  when: tf_downloaded
+
+- name: Delete Terraform archive
+  ansible.builtin.file:
+    path: "/tmp/{{ tf_archive }}"
+    state: absent

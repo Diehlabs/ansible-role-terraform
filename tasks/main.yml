@@ -30,7 +30,7 @@
     marker: "# {mark}  --------------------- ANSIBLE MANAGED BLOCK"
   when: terraform_cli_config_extra is defined
 
-- include_tasks: download_alt_versions.yml
+- include_tasks: terraform.yml
   loop: "{{ terraform_alt_versions | dict2items }}"
   when: terraform_alt_versions is defined
 

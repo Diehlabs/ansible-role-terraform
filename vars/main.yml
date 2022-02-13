@@ -3,7 +3,6 @@
 
 terraform_brew_pkgs:
   - unzip
-  - terraform
   - terragrunt
   - tflint
   - terraform-docs
