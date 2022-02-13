@@ -4,21 +4,22 @@
 # terraform_golang_version: 1.16
 
 terraform_user_id: "{{ user_id }}"
+terraform_binary_path: /usr/local/bin
+
+# If provided, the "default" version will just be named terraform.
+# Others will have the key provided appended to the file name.
+terraform_versions:
+  default: 1.1.5 # will be named "terraform"
+#   15: '0.15.5' # will be named "terraform-15"
+#   14: '0.14.11'
+#   13: '0.13.7'
+#   12: '0.12.31'
 
 # terraform_cli_config_extra:
-
-# only used for linux
-# terraform_verion: 1.1.5
 
 # The tokens should be an encrypted ansible vault value, or supplied from HashiCorp Vault
 # to keep them secret!
 # https://docs.ansible.com/ansible/latest/user_guide/vault.html
-
-# terraform_alt_versions:
-#   15: '0.15.5'
-#   14: '0.14.11'
-#   13: '0.13.7'
-#   12: '0.12.31'
 
 # terraform_backend_creds:
   # hostname: terraform_api_token

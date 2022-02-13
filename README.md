@@ -23,9 +23,7 @@ Role Variables
 terraform_user_id | User ID for file perms etc | myuserid | {{ user_id }} | YES |
 terraform_backend_creds | TFE/TFC credential data | see default/main.yml | not defined | NO |
 terraform_cli_config_extra | Non-TFE/TFC credential data for terraformrc | "provider_installation { ..." | not defined | NO |
-terraform_alt_versions | Additional versions of TF CLI to install | see default/main.yml | not defined | NO |
-terraform_verion | Primary TF CLI version to install | see default/main.yml | not defined | Yes if Linux |
-
+terraform_versions | Versions of TF CLI to install | see default/main.yml | default: 1.1.5| NO |
 
 Dependencies
 ------------

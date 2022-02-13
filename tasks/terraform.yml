@@ -1,0 +1,66 @@
+---
+- name: Set Terraform binary filename based on version
+  ansible.builtin.set_fact:
+    tf_binary: >-
+      {%- if item.key | lower == 'default' -%}
+      terraform
+      {%- else -%}
+      terraform-{{ item.key }}
+      {%- endif -%}
+
+- name: "Output: tf_binary {{ item.value }}"
+  ansible.builtin.debug:
+    var: tf_binary
+
+- name: Set arch to amd64 if TF CLI version is older than 1.0.2
+  ansible.builtin.set_fact:
+    tf_cli_arch: >-
+      {%- if item.value < '1.0.2' -%}
+      amd64
+      {%- else -%}
+      {{ terraform_arch[ansible_architecture] }}
+      {%- endif -%}
+
+- name: "Output: tf_cli_arch {{ item.value }}"
+  ansible.builtin.debug:
+    var: tf_cli_arch
+
+- name: Set Terraform archive filename based on version
+  ansible.builtin.set_fact:
+    tf_archive: "terraform_{{ item.value }}_{{ ansible_system | lower }}_{{ tf_cli_arch }}.zip"
+
+- name: "Output: tf_archive {{ item.value }}"
+  ansible.builtin.debug:
+    var: tf_archive
+
+- name: "Verify TF binary {{ item.value }}"
+  ansible.builtin.stat:
+    path: "{{ terraform_binary_path }}/{{ tf_binary }}"
+  register: tf_binary_verify
+
+- name: "Verify TF version {{ item.value }}"
+  ansible.builtin.command: "{{ terraform_binary_path }}/{{ tf_binary }} --version"
+  failed_when: false
+  changed_when: false
+  register: tf_version
+
+- name: "Extract Terraform binary v{{ item.value }}"
+  ansible.builtin.unarchive:
+    remote_src: yes
+    src: "https://releases.hashicorp.com/terraform/{{ item.value }}/{{ tf_archive }}"
+    dest: "/tmp"
+  when: not tf_binary_verify.stat.exists or item.value not in tf_version.stdout
+
+- name: "Move Terraform binary v{{ item.value }}"
+  ansible.builtin.copy:
+    src: /tmp/terraform
+    dest: "{{ terraform_binary_path }}/{{ tf_binary }}"
+    mode: u=rwx,g=rx,o=rx
+    owner: "{{ terraform_user_id }}"
+    remote_src: true
+  when: not tf_binary_verify.stat.exists or item.value not in tf_version.stdout
+
+- name: "Delete Terraform archive v{{ item.value }}"
+  ansible.builtin.file:
+    path: "/tmp/{{ tf_archive }}"
+    state: absent
