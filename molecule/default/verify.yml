@@ -18,16 +18,25 @@
       host2: "myothertoken"
 
   tasks:
-  - name: Get terraformrc contents
+  - name: Get content of terraformrc file
+    ansible.builtin.slurp:
+      src: /home/chris/.terraformrc
+    register: terraformrc_raw
+
+  - name: Convert content of terraformrc file
     ansible.builtin.set_fact:
-      terraformrc_content: "{{ lookup('file', '/home/chris/.terraformrc') | from_json }}"
+      terraformrc_content: "{{ terraformrc_raw.content | b64decode | from_json }}"
 
   - name: debug
     ansible.builtin.debug:
       var: terraformrc_content
-  # - name: Assert that .terraformrc contains exptected values
-  #   ansible.builtin.assert:
-  #     that:
+
+  - name: Assert that .terraformrc contains exptected values
+    ansible.builtin.assert:
+      that:
+        - terraformrc_content.credentials.host1.token == "mytoken"
+        - terraformrc_content.credentials.host2.token == "myothertoken"
+      msg: "The .terraformrc file must be valid json and contain the credentials specified."
 
   - name: Get Terraform version
     ansible.builtin.command:
