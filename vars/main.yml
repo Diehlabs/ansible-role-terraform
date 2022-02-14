@@ -12,3 +12,5 @@ terraform_arch:
   x86_64: amd64
   aarch64: arm64
   arm64: arm64 # in case it doesn't need translation
+
+terraform_terragrunt_url: "https://github.com/gruntwork-io/terragrunt/releases/download/v{{ terraform_terragrunt_version }}/terragrunt_{{ ansible_system | lower }}_{{ terraform_arch[ansible_architecture] }}"

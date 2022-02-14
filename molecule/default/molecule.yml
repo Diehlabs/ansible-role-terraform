@@ -28,6 +28,7 @@ provisioner:
         terraform_backend_creds:
           host1: "mytoken"
           host2: "myothertoken"
+        terraform_terragrunt_version: 0.36.1
 
 verifier:
   name: ansible
