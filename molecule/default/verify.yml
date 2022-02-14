@@ -18,17 +18,25 @@
       host2: "myothertoken"
 
   tasks:
-  - name: Get terraformrc contents
+  - name: Get content of terraformrc file
+    ansible.builtin.slurp:
+      src: /home/chris/.terraformrc
+    register: terraformrc_raw
+
+  - name: Convert content of terraformrc file
     ansible.builtin.set_fact:
-      terraformrc_content: "{{ lookup('file', '/home/chris/.terraformrc') | from_json }}"
+      terraformrc_content: "{{ terraformrc_raw.content | b64decode | from_json }}"
 
-  - name: debug
-    ansible.builtin.debug:
-      var: terraformrc_content
-  # - name: Assert that .terraformrc contains exptected values
-  #   ansible.builtin.assert:
-  #     that:
+  - name: Assert that .terraformrc contains exptected values
+    ansible.builtin.assert:
+      that:
+        - terraformrc_content.credentials.host1.token == "mytoken"
+        - terraformrc_content.credentials.host2.token == "myothertoken"
+      fail_msg: "The .terraformrc file must be valid json and contain the expected entries."
+      success_msg: "The .terraformrc file is valid json and contains the expected entries."
 
+  # This is just to ensure I'm using the latest Terraform CLI version in the tests.
+  # Not using assert as this doesn't mean the role is not functioning.
   - name: Get Terraform version
     ansible.builtin.command:
       cmd: terraform --version
@@ -40,3 +48,8 @@
       msg: "{{ tf_output.stdout_lines }}"
     changed_when: False
     when: tf_outdated in tf_output.stdout
+
+  # - name: Assert that Terraform version is latest
+  #   ansible.builtin.assert:
+  #     that:
+  #       - tf_output.stdout is not match('is out of date')

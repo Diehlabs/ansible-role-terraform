@@ -6,4 +6,3 @@
     - name: "Include terraform"
       include_role:
         name: "ansible-role-terraform"
-
