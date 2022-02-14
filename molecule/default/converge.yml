@@ -1,14 +1,9 @@
 ---
 - name: Converge
   hosts: all
-  vars:
-    user_id: chris
+
   tasks:
     - name: "Include terraform"
       include_role:
         name: "ansible-role-terraform"
-      vars:
-        terraform_versions:
-          default: 1.1.5
-          102: 1.0.2 # 1.0.2 is the first version published for arm64 arch
-          12: 0.12.31
+

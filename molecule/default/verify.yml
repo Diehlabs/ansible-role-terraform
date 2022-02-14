@@ -5,8 +5,30 @@
   hosts: all
   gather_facts: false
   vars:
+    # for tests
     tf_outdated: 'is out of date'
+    # from inventory
+    user_id: chris
+    terraform_versions:
+      default: '1.1.5'
+      '102': '1.0.2' # 1.0.2 is the first version published for arm64 arch
+      '12': '0.12.31'
+    terraform_backend_creds:
+      host1: "mytoken"
+      host2: "myothertoken"
+
   tasks:
+  - name: Get terraformrc contents
+    ansible.builtin.set_fact:
+      terraformrc_content: "{{ lookup('file', '/home/chris/.terraformrc') | from_json }}"
+
+  - name: debug
+    ansible.builtin.debug:
+      var: terraformrc_content
+  # - name: Assert that .terraformrc contains exptected values
+  #   ansible.builtin.assert:
+  #     that:
+
   - name: Get Terraform version
     ansible.builtin.command:
       cmd: terraform --version

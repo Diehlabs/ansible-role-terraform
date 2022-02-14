@@ -6,19 +6,13 @@
   when: ansible_distribution == 'Ubuntu'
 
 - name: Manage Terraform CLI credentials
-  ansible.builtin.blockinfile:
-    path: "~{{ terraform_user_id }}/.terraformrc"
-    create: true
+  ansible.builtin.template:
+    dest: "~{{ terraform_user_id }}/.terraformrc"
+    src: terraformrc.j2
     owner: "{{ terraform_user_id }}"
     mode: u=rw
-    block: |
-      credentials "{{ item.key }}" {
-        token = "{{ item.value }}"
-      }
-    marker: "# {mark} --------------------- ANSIBLE MANAGED BLOCK - {{ item.key }} managed by ansible-role-terraform"
   when: terraform_backend_creds is defined
-  loop: "{{ terraform_backend_creds | dict2items }}"
-  no_log: true
+  # no_log: true
 
 - name: Manage Terraform CLI extra config
   ansible.builtin.blockinfile:
