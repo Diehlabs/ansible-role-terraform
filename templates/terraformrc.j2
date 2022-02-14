@@ -1,6 +1,6 @@
 {
   "credentials": {
-{% for item in terraform_backend_creds | dict2items %}    
+{% for item in terraform_backend_creds | dict2items %}
     "{{ item.key }}": {
       "token": "{{ item.value }}"
     }
