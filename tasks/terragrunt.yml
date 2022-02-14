@@ -1,0 +1,37 @@
+---
+- name: "Verify Terragrunt binary {{ terraform_terragrunt_version }}"
+  ansible.builtin.stat:
+    path: "{{ terraform_binary_path }}/terragrunt"
+  register: tg_binary_verify
+
+- name: "Verify Terragrunt version {{ terraform_terragrunt_version }}"
+  ansible.builtin.command: "{{ terraform_binary_path }}/terragrunt --version"
+  failed_when: false
+  changed_when: false
+  register: tg_version
+  when: tg_binary_verify.stat.exists
+
+- name: "Output Terragrunt version at {{ terraform_binary_path }}/terragrunt"
+  ansible.builtin.debug:
+    var: tg_version.stdout
+
+- name: "Download Terragrunt binary v{{ terraform_terragrunt_version }}"
+  ansible.builtin.get_url:
+    url: "{{ terraform_terragrunt_url }}"
+    dest: "/tmp"
+    owner: "{{ terraform_user_id }}"
+  when: not tg_binary_verify.stat.exists or terraform_terragrunt_version not in tg_version.stdout
+
+- name: "Move Terragrunt binary v{{ terraform_terragrunt_version }}"
+  ansible.builtin.copy:
+    dest: "{{ terraform_binary_path }}/terragrunt"
+    src: "/tmp/terragrunt_{{ ansible_system | lower }}_{{ terraform_arch[ansible_architecture] }}"
+    mode: u=rwx,g=rx,o=rx
+    owner: "{{ terraform_user_id }}"
+    remote_src: true
+  when: not tg_binary_verify.stat.exists or terraform_terragrunt_version not in tg_version.stdout
+
+- name: "Delete Terragrunt downloaded file {{ terraform_terragrunt_version }}"
+  ansible.builtin.file:
+    path: "/tmp/terragrunt_{{ ansible_system | lower }}_{{ terraform_arch[ansible_architecture] }}"
+    state: absent

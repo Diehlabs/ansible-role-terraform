@@ -8,9 +8,9 @@
       terraform-{{ item.key }}
       {%- endif -%}
 
-- name: "Output: tf_binary {{ item.value }}"
-  ansible.builtin.debug:
-    var: tf_binary
+# - name: "Output: tf_binary {{ item.value }}"
+#   ansible.builtin.debug:
+#     var: tf_binary
 
 - name: Set arch to amd64 if TF CLI version is older than 1.0.2
   ansible.builtin.set_fact:
@@ -21,17 +21,17 @@
       {{ terraform_arch[ansible_architecture] }}
       {%- endif -%}
 
-- name: "Output: tf_cli_arch {{ item.value }}"
-  ansible.builtin.debug:
-    var: tf_cli_arch
+# - name: "Output: tf_cli_arch {{ item.value }}"
+#   ansible.builtin.debug:
+#     var: tf_cli_arch
 
 - name: Set Terraform archive filename based on version
   ansible.builtin.set_fact:
     tf_archive: "terraform_{{ item.value }}_{{ ansible_system | lower }}_{{ tf_cli_arch }}.zip"
 
-- name: "Output: tf_archive {{ item.value }}"
-  ansible.builtin.debug:
-    var: tf_archive
+# - name: "Output: tf_archive {{ item.value }}"
+#   ansible.builtin.debug:
+#     var: tf_archive
 
 - name: "Verify TF binary {{ item.value }}"
   ansible.builtin.stat:
@@ -43,8 +43,9 @@
   failed_when: false
   changed_when: false
   register: tf_version
+  when: tf_binary_verify.stat.exists
 
-- name: "Extract Terraform binary v{{ item.value }}"
+- name: "Download Terraform binary v{{ item.value }}"
   ansible.builtin.unarchive:
     remote_src: yes
     src: "https://releases.hashicorp.com/terraform/{{ item.value }}/{{ tf_archive }}"
