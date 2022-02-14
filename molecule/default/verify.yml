@@ -27,10 +27,6 @@
     ansible.builtin.set_fact:
       terraformrc_content: "{{ terraformrc_raw.content | b64decode | from_json }}"
 
-  - name: debug
-    ansible.builtin.debug:
-      var: terraformrc_content
-
   - name: Assert that .terraformrc contains exptected values
     ansible.builtin.assert:
       that:
