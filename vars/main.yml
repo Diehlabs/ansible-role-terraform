@@ -1,13 +1,6 @@
 ---
 # vars file for terraform
 
-terraform_brew_pkgs:
-  - unzip
-  - tflint
-  - terraform-docs
-  - checkov
-  - tfsec
-
 terraform_arch:
   x86_64: amd64
   aarch64: arm64

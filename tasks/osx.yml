@@ -3,10 +3,17 @@
   become: false
   community.general.homebrew:
     state: absent
-    name: terraform
-    install_options: --ignore-dependencies
+    name:
+      - terragrunt
+      - terraform
 
 - name: Install Terraform Homebrew Packages
   become: false
   community.general.homebrew:
     state: present
+    name:
+      - unzip
+      - tflint
+      - terraform-docs
+      - checkov
+      - tfsec
