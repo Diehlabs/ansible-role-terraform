@@ -11,9 +11,7 @@
   become: false
   community.general.homebrew:
     state: present
-    name:
-      - unzip
-      - tflint
-      - terraform-docs
-      - checkov
-      - tfsec
+    name: {{ terraform_brew_packages + 'tfenv' if terraform_versions.default = 'tfenv' else terraform_brew_packages }}
+
+
+
