@@ -11,7 +11,4 @@
   become: false
   community.general.homebrew:
     state: present
-    name: {{ terraform_brew_packages + 'tfenv' if terraform_versions.default = 'tfenv' else terraform_brew_packages }}
-
-
-
+    name: "{{ terraform_brew_packages + 'tfenv' if terraform_versions.default = 'tfenv' else terraform_brew_packages }}"
