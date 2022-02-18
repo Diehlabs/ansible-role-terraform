@@ -5,6 +5,7 @@
 
 terraform_user_id: "{{ user_id }}"
 terraform_binary_path: /usr/local/bin
+terraform_plugin_cache_dir: "~{{ terraform_user_id }}/.terraform"
 
 # If provided, the "default" version will just be named terraform.
 # Others will have the key provided appended to the file name.

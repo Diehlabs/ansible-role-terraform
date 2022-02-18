@@ -12,7 +12,7 @@
     owner: "{{ terraform_user_id }}"
     mode: u=rw
   when: terraform_backend_creds is defined
-  # no_log: true
+  no_log: true
 
 - name: Manage Terraform CLI extra config
   ansible.builtin.blockinfile:
@@ -21,8 +21,29 @@
     owner: "{{ terraform_user_id }}"
     mode: u=rw
     block: "{{ terraform_cli_config_extra }}"
-    marker: "# {mark}  --------------------- ANSIBLE MANAGED BLOCK"
+    marker: "# {mark} #---------------------# {{ terraform_managed_by }}"
   when: terraform_cli_config_extra is defined
+
+- name: Configure Terraform plugin cache directory
+  ansible.builtin.file:
+    path: "{{ terraform_plugin_cache_dir }}"
+    state: directory
+    owner: "{{ terraform_user_id }}"
+    mode: u=rw
+  when: terraform_plugin_cache_dir is defined
+
+- name: Configure shell env for Terraform plugin cache dir
+  ansible.builtin.lineinfile:
+    path: "~{{ terraform_user_id }}/{{ item }}"
+    regexp: '^export TF_PLUGIN_CACHE_DIR='
+    line: "export TF_PLUGIN_CACHE_DIR={{ terraform_plugin_cache_dir }} #---# {{ terraform_managed_by }}"
+    create: true
+    mode: u=rw,g=r
+    owner: "{{ terraform_user_id }}"
+  loop:
+    - .zshenv
+    - .bash_profile
+  when: terraform_plugin_cache_dir is defined
 
 - include_tasks: terraform.yml
   with_dict: "{{ terraform_versions }}"
