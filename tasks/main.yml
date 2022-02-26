@@ -29,7 +29,7 @@
     path: "{{ terraform_plugin_cache_dir }}"
     state: directory
     owner: "{{ terraform_user_id }}"
-    mode: u=rw
+    mode: u=rwx,g=rwx,o=rx
   when: terraform_plugin_cache_dir is defined
 
 - name: Configure shell env for Terraform plugin cache dir
