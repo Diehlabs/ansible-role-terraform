@@ -10,7 +10,7 @@ terraform_plugin_cache_dir: "~{{ terraform_user_id }}/.terraform"
 # If provided, the "default" version will just be named terraform.
 # Others will have the key provided appended to the file name.
 terraform_versions:
-  default: 1.1.5 # will be named "terraform"
+  default: "{{ 'tfenv' if ansible_os_family == 'Darwin' else '1.1.6' }}"
 #   15: '0.15.5' # will be named "terraform-15"
 #   14: '0.14.11'
 #   13: '0.13.7'

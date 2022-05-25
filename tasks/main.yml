@@ -47,6 +47,7 @@
 
 - include_tasks: terraform.yml
   with_dict: "{{ terraform_versions }}"
+  when: terraform_versions.default != 'tfenv'
 
 - include_tasks: terragrunt.yml
   when: terraform_terragrunt_version is defined
