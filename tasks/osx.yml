@@ -6,6 +6,7 @@
     name:
       - terragrunt
       - terraform
+  when: terraform_versions['default'] == 'tfenv'
 
 - name: Install Terraform Homebrew Packages
   become: false
